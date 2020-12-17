@@ -1,3 +1,5 @@
 
 db/*
 output_files/*
+*.ammdb
+incremental_db/*

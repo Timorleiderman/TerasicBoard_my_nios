@@ -1,6 +1,9 @@
-03:03:33 **** Clean-only build of configuration Nios II for project my_nios ****
-make clean 
-[my_nios clean complete]
+03:14:26 **** Incremental Build of configuration Nios II for project my_nios ****
+make all 
+Info: Building ../my_nios_bsp/
+D:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../my_nios_bsp/
+[BSP build complete]
+[my_nios build complete]
 
-03:03:33 Build Finished (took 88ms)
+03:14:27 Build Finished (took 430ms)
 
