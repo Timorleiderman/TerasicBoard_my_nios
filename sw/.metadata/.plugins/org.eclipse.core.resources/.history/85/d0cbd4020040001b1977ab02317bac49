@@ -1,0 +1,101 @@
+/*
+ * "Hello World" example.
+ *
+ * This example prints 'Hello from Nios II' to the STDOUT stream. It runs on
+ * the Nios II 'standard', 'full_featured', 'fast', and 'low_cost' example
+ * designs. It runs with or without the MicroC/OS-II RTOS and requires a STDOUT
+ * device in your system's hardware.
+ * The memory footprint of this hosted application is ~69 kbytes by default
+ * using the standard reference design.
+ *
+ * For a reduced footprint version of this template, and an explanation of how
+ * to reduce the memory footprint for a given application, see the
+ * "small_hello_world" template.
+ *
+ */
+
+#include <stdio.h>
+#include <stdint.h>
+#include <unistd.h>
+#include <sys/alt_timestamp.h>
+#include "altera_avalon_pio_regs.h"
+#include "alt_types.h"
+#include "sys/alt_irq.h"
+#include "system.h"
+
+
+#define MATCHES_NUMBER 500
+#define MATCHES_MEM_SIZE 1000
+
+
+typedef struct Points
+{
+	uint16_t x;
+	uint16_t y;
+}Point;
+
+/* Declare a global variable to hold the edge capture value. */
+volatile int edge_capture;
+
+static void handle_button_interrupts(void* context)
+{
+	/* Cast context to edge_capture's type. It is important that this
+	be declared volatile to avoid unwanted compiler optimization. */
+	volatile int* edge_capture_ptr = (volatile int*) context;
+	/*
+	 * Read the edge capture register on the button PIO.
+	 * Store value.
+	 */
+	*edge_capture_ptr = IORD_ALTERA_AVALON_PIO_EDGE_CAP(PIO_INTERRUPT_BASE);
+	/* Write to the edge capture register to reset it. */
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PIO_INTERRUPT_BASE, 0);
+	/* Read the PIO to delay ISR exit. This is done to prevent a
+	spurious interrupt in systems with high processor -> pio
+	latency and fast interrupts. */
+	IORD_ALTERA_AVALON_PIO_EDGE_CAP(PIO_INTERRUPT_BASE);
+}
+
+static void init_button_pio()
+{
+	/* Recast the edge_capture pointer to match the
+	alt_irq_register() function prototype. */
+	void* edge_capture_ptr = (void*) &edge_capture;
+	/* Enable 1 button interrupts. */
+	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PIO_INTERRUPT_BASE, 0x1);
+	/* Reset the edge capture register. */
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PIO_INTERRUPT_BASE, 0x0);
+	/* Register the ISR. */
+	alt_ic_isr_register(PIO_INTERRUPT_IRQ_INTERRUPT_CONTROLLER_ID, PIO_INTERRUPT_IRQ, handle_button_interrupts, edge_capture_ptr, 0x0);
+
+}
+
+void process_no_interrupt()
+{
+	printf("interrupt disable\n");
+	alt_ic_irq_disable(PIO_INTERRUPT_IRQ_INTERRUPT_CONTROLLER_ID, PIO_INTERRUPT_IRQ);
+
+	IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE, 0x01);
+	usleep(20000000);
+	IOWR_ALTERA_AVALON_PIO_DATA(PIO_0_BASE, 0x00);
+	alt_ic_irq_enable(PIO_INTERRUPT_IRQ_INTERRUPT_CONTROLLER_ID, PIO_INTERRUPT_IRQ);
+	printf("interrupt enable\n");
+}
+
+
+
+int main()
+{
+	printf("Hello from Nios II!\n");
+	if (alt_timestamp_start() < 0) {
+		printf("Timer init failed \n");
+	}
+			//calculate overhead
+	int time1 = alt_timestamp();
+	int time2 = alt_timestamp();
+	int num_ticks;
+	int timer_overhead = time2 - time1;
+	printf("Number of ticks per second = %u \n", (unsigned int)alt_timestamp_freq());
+
+
+  return 0;
+}

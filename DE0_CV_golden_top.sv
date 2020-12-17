@@ -1,0 +1,249 @@
+// ============================================================================
+// Copyright (c) 2014 by Terasic Technologies Inc.
+// ============================================================================
+//
+// Permission:
+//
+//   Terasic grants permission to use and modify this code for use
+//   in synthesis for all Terasic Development Boards and Altera Development 
+//   Kits made by Terasic.  Other use of this code, including the selling 
+//   ,duplication, or modification of any portion is strictly prohibited.
+//
+// Disclaimer:
+//
+//   This VHDL/Verilog or C/C++ source code is intended as a design reference
+//   which illustrates how these types of functions can be implemented.
+//   It is the user's responsibility to verify their design for
+//   consistency and functionality through the use of formal
+//   verification methods.  Terasic provides no warranty regarding the use 
+//   or functionality of this code.
+//
+// ============================================================================
+//           
+//  Terasic Technologies Inc
+//  9F., No.176, Sec.2, Gongdao 5th Rd, East Dist, Hsinchu City, 30070. Taiwan
+//  
+//  
+//                     web: http://www.terasic.com/  
+//                     email: support@terasic.com
+//
+// ============================================================================
+//   Ver  :| Author            :| Mod. Date :| Changes Made:
+//   V1.0 :| Yue Yang          :| 08/25/2014:| Initial Revision
+// ============================================================================
+`define Enable_CLOCK2
+//`define Enable_CLOCK3
+//`define Enable_CLOCK4
+//`define Enable_CLOCK
+//`define Enable_DRAM
+//`define Enable_GPIO
+//`define Enable_HEX0
+//`define Enable_HEX1
+//`define Enable_HEX2
+//`define Enable_HEX3
+//`define Enable_HEX4
+//`define Enable_HEX5
+`define Enable_KEY
+`define Enable_LEDR
+//`define Enable_PS2
+`define Enable_RESET
+//`define Enable_SD
+//`define Enable_SW
+//`define Enable_VGA
+
+module DE0_CV_golden_top (
+
+`ifdef Enable_CLOCK2
+      ///////// CLOCK2 "3.3-V LVTTL" /////////
+      input              CLOCK2_50,
+`endif	  
+
+`ifdef Enable_CLOCK3
+      ///////// CLOCK3 "3.3-V LVTTL" /////////
+      input              CLOCK3_50,
+`endif
+
+`ifdef Enable_CLOCK4
+      ///////// CLOCK4  "3.3-V LVTTL"  /////////
+      inout              CLOCK4_50,
+`endif	  
+`ifdef Enable_CLOCK
+      ///////// CLOCK  "3.3-V LVTTL" /////////
+      input              CLOCK_50,
+`endif
+`ifdef Enable_DRAM
+      ///////// DRAM  "3.3-V LVTTL" /////////
+      output      [12:0] DRAM_ADDR,
+      output      [1:0]  DRAM_BA,
+      output             DRAM_CAS_N,
+      output             DRAM_CKE,
+      output             DRAM_CLK,
+      output             DRAM_CS_N,
+      inout       [15:0] DRAM_DQ,
+      output             DRAM_LDQM,
+      output             DRAM_RAS_N,
+      output             DRAM_UDQM,
+      output             DRAM_WE_N,
+`endif
+`ifdef Enable_GPIO
+      ///////// GPIO "3.3-V LVTTL" /////////
+      inout       [35:0] GPIO_0,
+      inout       [35:0] GPIO_1,
+`endif
+`ifdef Enable_HEX0
+      ///////// HEX0  "3.3-V LVTTL" /////////
+      output      [6:0]  HEX0,
+`endif
+`ifdef Enable_HEX1
+      ///////// HEX1 "3.3-V LVTTL" /////////
+      output      [6:0]  HEX1,
+`endif
+`ifdef Enable_HEX2
+      ///////// HEX2 "3.3-V LVTTL" /////////
+      output      [6:0]  HEX2,
+`endif
+`ifdef Enable_HEX3
+      ///////// HEX3 "3.3-V LVTTL" /////////
+      output      [6:0]  HEX3,
+`endif
+`ifdef Enable_HEX4
+      ///////// HEX4 "3.3-V LVTTL" /////////
+      output      [6:0]  HEX4,
+`endif
+`ifdef Enable_HEX5
+      ///////// HEX5 "3.3-V LVTTL" /////////
+      output      [6:0]  HEX5,
+`endif
+`ifdef Enable_KEY
+      ///////// KEY  "3.3-V LVTTL" /////////
+      input       [3:0]  KEY,
+`endif
+`ifdef Enable_LEDR
+      ///////// LEDR /////////
+      output      [9:0]  LEDR,
+`endif
+`ifdef Enable_PS2
+      ///////// PS2 "3.3-V LVTTL" /////////
+      inout              PS2_CLK,
+      inout              PS2_CLK2,
+      inout              PS2_DAT,
+      inout              PS2_DAT2,
+`endif
+`ifdef Enable_RESET
+      ///////// RESET "3.3-V LVTTL" /////////
+      input              RESET_N
+`endif
+`ifdef Enable_SD
+      ///////// SD "3.3-V LVTTL" /////////
+      output             SD_CLK,
+      inout              SD_CMD,
+      inout       [3:0]  SD_DATA,
+`endif
+`ifdef Enable_SW
+      ///////// SW "3.3-V LVTTL"/////////
+      input       [9:0]  SW,
+`endif
+`ifdef Enable_VGA
+      ///////// VGA  "3.3-V LVTTL" /////////
+      output      [3:0]  VGA_B,
+      output      [3:0]  VGA_G,
+      output             VGA_HS,
+      output      [3:0]  VGA_R,
+      output             VGA_VS
+`endif	 
+);
+
+
+		
+		logic [7:0]  led_external_connection_export; // led_external_connection.export
+		/*
+		logic [9:0]  onchip_memory2_1_s2_address;    //     onchip_memory2_1_s2.address
+		logic        onchip_memory2_1_s2_chipselect; //                        .chipselect
+		logic        onchip_memory2_1_s2_clken;      //                        .clken
+		logic        onchip_memory2_1_s2_write;      //                        .write
+		logic [31:0] onchip_memory2_1_s2_readdata;   //                        .readdata
+		logic [31:0] onchip_memory2_1_s2_writedata;  //                        .writedata
+		logic [3:0]  onchip_memory2_1_s2_byteenable; //                        .byteenable
+		logic [9:0]  onchip_memory2_2_s2_address;    //     onchip_memory2_2_s2.address
+		logic        onchip_memory2_2_s2_chipselect; //                        .chipselect
+		logic        onchip_memory2_2_s2_clken;      //                        .clken
+		logic        onchip_memory2_2_s2_write;      //                        .write
+		logic [31:0] onchip_memory2_2_s2_readdata;   //                        .readdata
+		logic [31:0] onchip_memory2_2_s2_writedata;  //                        .writedata
+		logic [3:0]  onchip_memory2_2_s2_byteenable; //                        .byteenable
+		
+		
+always  @ (posedge CLOCK2_50 )  begin
+	if (RESET_N == 0) begin  
+	
+	  //HEX0[6:0] <= '0;
+	  
+	  onchip_memory2_1_s2_address <= '0;    
+	  onchip_memory2_1_s2_chipselect <= '0; 
+	  onchip_memory2_1_s2_clken <= '0;      
+	  onchip_memory2_1_s2_write <= '0;      
+	  onchip_memory2_1_s2_readdata <= '0;   
+	  onchip_memory2_1_s2_writedata <= '0;  
+	  onchip_memory2_1_s2_byteenable <= '0; 
+	  onchip_memory2_2_s2_address <= '0;    
+	  onchip_memory2_2_s2_chipselect <= '0; 
+	  onchip_memory2_2_s2_clken <= '0;      
+	  onchip_memory2_2_s2_write <= '0;      
+	  onchip_memory2_2_s2_readdata <= '0;   
+	  onchip_memory2_2_s2_writedata <= '0;  
+	  onchip_memory2_2_s2_byteenable <= '0; 
+	  
+	  
+	end   
+   else begin  
+	  
+	  if (KEY[1]) begin
+			LEDR[0] <= 1'b1;
+	  end
+	  else
+			LEDR[0] <= 1'b0;
+	  
+   end   
+ 
+end  
+*/
+	my_nios u0 (
+		.clk_clk                          (CLOCK2_50),                          //                       clk.clk
+		.reset_reset_n                    (RESET_N),                    //                     reset.reset_n
+		.pio_0_external_connection_export (led_external_connection_export),  // pio_0_external_connection.export
+		.pio_interrupt_external_connection_export (KEY[0])  // 
+	);
+
+
+
+	/*
+	TNIOS u0 (
+		.clk_clk                                  (CLOCK2_50),                        //                     clk.clk
+		.led_external_connection_export           (led_external_connection_export),  // led_external_connection.export
+		.interrupt_pin_external_connection_export (KEY[1]), // interrupt_pin_external_connection.export
+		.reset_reset_n                            (RESET_N),                   //                   reset.reset_n
+		.onchip_memory2_1_s2_address              (onchip_memory2_1_s2_address),    //     onchip_memory2_1_s1.address
+		.onchip_memory2_1_s2_chipselect           (onchip_memory2_1_s2_chipselect),      //                        .clken
+		.onchip_memory2_1_s2_clken                (onchip_memory2_1_s2_clken), //                        .chipselect
+		.onchip_memory2_1_s2_write                (onchip_memory2_1_s2_write),      //                        .write
+		.onchip_memory2_1_s2_readdata             (onchip_memory2_1_s2_readdata),   //                        .readdata
+		.onchip_memory2_1_s2_writedata            (onchip_memory2_1_s2_writedata),  //                        .writedata
+		.onchip_memory2_1_s2_byteenable           (onchip_memory2_1_s2_byteenable),  //                        .byteenable
+		.onchip_memory2_2_s2_address              (onchip_memory2_2_s2_address),    //     onchip_memory2_1_s1.address
+		.onchip_memory2_2_s2_chipselect           (onchip_memory2_2_s2_chipselect),      //                        .clken
+		.onchip_memory2_2_s2_clken                (onchip_memory2_2_s2_clken), //                        .chipselect
+		.onchip_memory2_2_s2_write                (onchip_memory2_2_s2_write),      //                        .write
+		.onchip_memory2_2_s2_readdata             (onchip_memory2_2_s2_readdata),   //                        .readdata
+		.onchip_memory2_2_s2_writedata            (onchip_memory2_2_s2_writedata ),  //                        .writedata
+		.onchip_memory2_2_s2_byteenable           (onchip_memory2_2_s2_byteenable)  //                        .byteenable
+
+	);
+	*/
+	
+	assign LEDR[5] = led_external_connection_export[0];
+
+	assign LEDR[0] = !KEY[1];
+		
+		
+endmodule 
+

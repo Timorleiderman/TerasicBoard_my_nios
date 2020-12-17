@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+newSoftwareExampleWizardPage.defaultLocation=E\:\\Developer\\FPGA\\TerasicBoard_my_nios\\software\\my_nios
+newSoftwareExampleWizardPage.sopcinfoFile=E\:\\Developer\\FPGA\\TerasicBoard_my_nios\\my_nios.sopcinfo
+newSoftwareExampleWizardPage2.newBspLocation=E\:\\Developer\\FPGA\\TerasicBoard_my_nios\\software\\my_nios_bsp
