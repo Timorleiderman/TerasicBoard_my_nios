@@ -457,3 +457,9 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 
 !ENTRY com.altera.sbtgui.launch 1 0 2020-12-17 03:14:29.603
 !MESSAGE Executing: [D:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x83040 /cygdrive/e/Developer/FPGA/TerasicBoard_my_nios/software/my_nios/my_nios.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-12-17 03:20:54.638
+!MESSAGE Executing: [D:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x83040]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2020-12-17 03:20:56.274
+!MESSAGE Executing: [D:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x83040 /cygdrive/e/Developer/FPGA/TerasicBoard_my_nios/software/my_nios/my_nios.elf]

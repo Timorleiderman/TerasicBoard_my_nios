@@ -3,3 +3,5 @@ db/*
 output_files/*
 *.ammdb
 incremental_db/*
+sw/.metadata/*
+*.log
